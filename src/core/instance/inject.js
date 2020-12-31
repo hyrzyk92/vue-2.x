@@ -7,7 +7,7 @@ import { defineReactive, toggleObserving } from '../observer/index'
 export function initProvide (vm: Component) {
   const provide = vm.$options.provide
   if (provide) {
-    vm._provided = typeof provide === 'function'
+    vm._provided = typeof provide === 'function'  //provide可能是对象，或者是返回对象的函数，_provided是对应的对象
       ? provide.call(vm)
       : provide
   }

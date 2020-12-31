@@ -73,7 +73,7 @@ export function createPatchFunction (backend) {
 
   const { modules, nodeOps } = backend
 
-  for (i = 0; i < hooks.length; ++i) {
+  for (i = 0; i < hooks.length; ++i) {   
     cbs[hooks[i]] = []
     for (j = 0; j < modules.length; ++j) {
       if (isDef(modules[j][hooks[i]])) {

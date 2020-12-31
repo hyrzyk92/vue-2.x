@@ -391,7 +391,7 @@ export function mergeOptions (
   vm?: Component
 ): Object {
   if (process.env.NODE_ENV !== 'production') {
-    checkComponents(child)
+    checkComponents(child)  //验证components里的组件名字
   }
 
   if (typeof child === 'function') {

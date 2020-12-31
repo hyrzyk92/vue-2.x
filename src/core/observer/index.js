@@ -43,7 +43,7 @@ export class Observer {
     this.value = value
     this.dep = new Dep()
     this.vmCount = 0
-    def(value, '__ob__', this)
+    def(value, '__ob__', this) //为value添加__ob__属性，值是this，即Observer的实例
     if (Array.isArray(value)) {
       if (hasProto) {
         protoAugment(value, arrayMethods)
@@ -153,7 +153,7 @@ export function defineReactive (
     val = obj[key]
   }
 
-  let childOb = !shallow && observe(val)
+  let childOb = !shallow && observe(val)  //这一步对深层的属性做拦截
   Object.defineProperty(obj, key, {
     enumerable: true,
     configurable: true,
@@ -177,7 +177,7 @@ export function defineReactive (
         return
       }
       /* eslint-enable no-self-compare */
-      if (process.env.NODE_ENV !== 'production' && customSetter) {
+      if (process.env.NODE_ENV !== 'production' && customSetter) {  //参数传有customSetter的代表不可以set
         customSetter()
       }
       // #7981: for accessor properties without setter

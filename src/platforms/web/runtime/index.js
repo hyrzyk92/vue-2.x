@@ -38,8 +38,8 @@ Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
 ): Component {
-  el = el && inBrowser ? query(el) : undefined
-  return mountComponent(this, el, hydrating)
+  el = el && inBrowser ? query(el) : undefined   //获取dom元素
+  return mountComponent(this, el, hydrating)  //挂载虚拟DOM到dom元素上，调用了beforeMount和mounted钩子
 }
 
 // devtools global hook

@@ -43,20 +43,20 @@ export function initMixin (Vue: Class<Component>) {
     }
     /* istanbul ignore else */
     if (process.env.NODE_ENV !== 'production') {
-      initProxy(vm)
+      initProxy(vm)  //将vm的proxy对象赋值给_renderProxy属性
     } else {
       vm._renderProxy = vm
     }
     // expose real self
     vm._self = vm
-    initLifecycle(vm)
-    initEvents(vm)
-    initRender(vm)
-    callHook(vm, 'beforeCreate')
-    initInjections(vm) // resolve injections before data/props
-    initState(vm)
-    initProvide(vm) // resolve provide after data/props
-    callHook(vm, 'created')
+    initLifecycle(vm)  //初始化vm的$parent, $children, $root, 有关生命周期的状态等属性
+    initEvents(vm)  //初始化vm的_events, _hasHookEvent
+    initRender(vm)  //给vm添加$createElement方法（另外还有父子组件的一些，回头再看？？？？？）
+    callHook(vm, 'beforeCreate')  //调用beforeCreate钩子
+    initInjections(vm) // resolve injections before data/props  遍历添加inject的属性给vm，并做拦截？？？？
+    initState(vm)  //遍历data、props的属性给vm，并做拦截；遍历methods属性给vm；遍历computed属性给vm，值做缓存，做拦截；将每一个监听创建watcher实例收集到vm的_watchers里，对于立即执行的立即执行;
+    initProvide(vm) // resolve provide after data/props  给vm添加_provided属性，值是provide配置的对象或者函数返回的对象
+    callHook(vm, 'created')  //调用created钩子
 
     /* istanbul ignore if */
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
