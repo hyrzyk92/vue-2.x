@@ -165,7 +165,7 @@ export function createPatchFunction (backend) {
 
       vnode.elm = vnode.ns
         ? nodeOps.createElementNS(vnode.ns, tag)
-        : nodeOps.createElement(tag, vnode)
+        : nodeOps.createElement(tag, vnode)  //创建元素
       setScope(vnode)
 
       /* istanbul ignore if */
@@ -192,7 +192,7 @@ export function createPatchFunction (backend) {
         if (isDef(data)) {
           invokeCreateHooks(vnode, insertedVnodeQueue)
         }
-        insert(parentElm, vnode.elm, refElm)
+        insert(parentElm, vnode.elm, refElm) 
       }
 
       if (process.env.NODE_ENV !== 'production' && data && data.pre) {
@@ -269,7 +269,7 @@ export function createPatchFunction (backend) {
     insert(parentElm, vnode.elm, refElm)
   }
 
-  function insert (parent, elm, ref) {
+  function insert (parent, elm, ref) {  //将子元素插入父元素
     if (isDef(parent)) {
       if (isDef(ref)) {
         if (nodeOps.parentNode(ref) === parent) {
@@ -473,7 +473,7 @@ export function createPatchFunction (backend) {
     }
   }
 
-  function checkDuplicateKeys (children) {
+  function checkDuplicateKeys (children) { //检查是否有重复的key
     const seenKeys = {}
     for (let i = 0; i < children.length; i++) {
       const vnode = children[i]
@@ -698,7 +698,7 @@ export function createPatchFunction (backend) {
   }
 
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
-    if (isUndef(vnode)) {
+    if (isUndef(vnode)) {   //isUndef函数的功能是判断传参是不是undefined 或者 null, isDef的功能是判断传参不是undefined和null
       if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
       return
     }
@@ -720,7 +720,7 @@ export function createPatchFunction (backend) {
           // mounting to a real element
           // check if this is server-rendered content and if we can perform
           // a successful hydration.
-          if (oldVnode.nodeType === 1 && oldVnode.hasAttribute(SSR_ATTR)) {
+          if (oldVnode.nodeType === 1 && oldVnode.hasAttribute(SSR_ATTR)) {  //服务端渲染的
             oldVnode.removeAttribute(SSR_ATTR)
             hydrating = true
           }
@@ -740,14 +740,14 @@ export function createPatchFunction (backend) {
           }
           // either not server-rendered, or hydration failed.
           // create an empty node and replace it
-          oldVnode = emptyNodeAt(oldVnode)
+          oldVnode = emptyNodeAt(oldVnode)  //返回一个vnode实例
         }
 
         // replacing existing element
         const oldElm = oldVnode.elm
         const parentElm = nodeOps.parentNode(oldElm)
 
-        // create new node
+        // create new node   将虚拟dom装换为dom元素 ？？？？
         createElm(
           vnode,
           insertedVnodeQueue,
