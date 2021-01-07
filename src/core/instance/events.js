@@ -71,7 +71,7 @@ export function eventsMixin (Vue: Class<Component>) {
   Vue.prototype.$once = function (event: string, fn: Function): Component {
     const vm: Component = this
     function on () {
-      vm.$off(event, on)
+      vm.$off(event, on)  //调用的时候移除对应的回调监听，保证只调用一次
       fn.apply(vm, arguments)
     }
     on.fn = fn
@@ -82,8 +82,8 @@ export function eventsMixin (Vue: Class<Component>) {
   Vue.prototype.$off = function (event?: string | Array<string>, fn?: Function): Component {
     const vm: Component = this
     // all
-    if (!arguments.length) {
-      vm._events = Object.create(null)
+    if (!arguments.length) {  //没有传参，清空所有事件绑定
+      vm._events = Object.create(null)  //重置
       return vm
     }
     // array of events
@@ -99,7 +99,7 @@ export function eventsMixin (Vue: Class<Component>) {
       return vm
     }
     if (!fn) {
-      vm._events[event] = null
+      vm._events[event] = null  //没有传回调，清空这个事件的所有监听器
       return vm
     }
     // specific handler
@@ -108,7 +108,7 @@ export function eventsMixin (Vue: Class<Component>) {
     while (i--) {
       cb = cbs[i]
       if (cb === fn || cb.fn === fn) {
-        cbs.splice(i, 1)
+        cbs.splice(i, 1)  //单独删去这一个回调的监听器
         break
       }
     }
